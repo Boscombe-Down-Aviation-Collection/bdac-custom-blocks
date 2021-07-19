@@ -65,7 +65,9 @@
             'custom-cta-js',
             plugins_url( $build_index, __FILE__ ),
             array(
-                'wp-blocks'
+                'wp-blocks',
+                'wp-editor',
+                'wp-components'
             ) 
         );
 

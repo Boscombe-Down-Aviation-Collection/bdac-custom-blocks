@@ -1,4 +1,6 @@
 const { registerBlockType } = wp.blocks
+const { RichText, InspectorControls, ColorPalette } = wp.editor
+const { PanelBody } = wp.components
 
 registerBlockType("bdac/bdac-blocks", {
   // built-in attributes
@@ -9,23 +11,76 @@ registerBlockType("bdac/bdac-blocks", {
 
   // custom attributes
   attributes: {
-    author: {
-      type: "string"
+    title: {
+      type: "string",
+      source: "html",
+      selector: "h2"
+    },
+    titleColour: {
+      type: "string",
+      default: "black"
+    },
+    body: {
+      type: "string",
+      source: "html",
+      selector: "p"
+    },
+    bodyColour: {
+      type: "string",
+      default: "black"
     }
   },
 
   // built-in functions
   edit({ attributes, setAttributes }) {
+    const { title, body, titleColour, bodyColour } = attributes
     // Custom functions
-    const updateAuthor = e => {
-      setAttributes({ author: e.target.value })
+    const onChangeTitle = newTitle => {
+      setAttributes({ title: newTitle })
+    }
+
+    const onChangeBody = newBody => {
+      setAttributes({ body: newBody })
+    }
+
+    const onTitleColourChange = newColour => {
+      setAttributes({ titleColour: newColour })
+    }
+
+    const onBodyColourChange = newColour => {
+      setAttributes({ bodyColour: newColour })
     }
 
     // NPX
-    return <input type="text" value={attributes.author} onChange={updateAuthor} />
+    return [
+      <InspectorControls style={{ marginBottom: "40px" }}>
+        <PanelBody title={"Title Colour"}>
+          <p>
+            <strong>Select a title colour</strong>
+          </p>
+          <ColorPalette value={titleColour} onChange={onTitleColourChange} />
+        </PanelBody>
+        <PanelBody title={"Body Colour"}>
+          <p>
+            <strong>Select a body colour</strong>
+          </p>
+          <ColorPalette value={bodyColour} onChange={onBodyColourChange} />
+        </PanelBody>
+      </InspectorControls>,
+      <section className="cta">
+        <RichText key="editable" tagName="h2" placeholder="Your CTA Title" value={title} onChange={onChangeTitle} style={{ color: titleColour }} />
+        <RichText key="editable" tagName="p" placeholder="Your Body" value={body} onChange={onChangeBody} style={{ color: bodyColour }} />
+      </section>
+    ]
   },
 
   save({ attributes }) {
-    return <p>Author name: {attributes.author}</p>
+    const { title, body, titleColour, bodyColour } = attributes
+    return (
+      <section className="cta">
+        <h2 style={{ color: titleColour }}>{title}</h2>
+        <RichText.Content tagName="p" value={body} style={{ color: bodyColour }} />
+      </section>
+    )
   }
 })
