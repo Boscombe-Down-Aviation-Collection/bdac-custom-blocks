@@ -19,10 +19,10 @@ registerBlockType("bdac/bdac-blocks", {
   // built-in functions
   edit() {
     // NPX
-    return `<div>hello world</div>`
+    return `<p>Hello World!!!</p>`
   },
 
   save() {
-    // return <p>Custom CTA Block</p>
+    return `<p>Hello World!!!</p>`
   }
 })

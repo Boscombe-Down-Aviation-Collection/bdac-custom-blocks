@@ -64,7 +64,9 @@
         wp_register_script( 
             'custom-cta-js',
             plugins_url( $build_index, __FILE__ ),
-            array() 
+            array(
+                'wp-blocks'
+            ) 
         );
 
         register_block_type(

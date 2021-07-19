@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:scripts": "wp-scripts build",
-    "build": "run-p \"build:*\""
+    "build": "run-p \"build:*\"",
+    "start-build": "wp-scripts start"
   },
   "devDependencies": {
     "@wordpress/scripts": "16.1.4",
