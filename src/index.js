@@ -9,20 +9,23 @@ registerBlockType("bdac/bdac-blocks", {
 
   // custom attributes
   attributes: {
-    // author: {
-    //   type: "string"
-    // }
+    author: {
+      type: "string"
+    }
   },
-
-  // Custom functions
 
   // built-in functions
-  edit() {
+  edit({ attributes, setAttributes }) {
+    // Custom functions
+    const updateAuthor = e => {
+      setAttributes({ author: e.target.value })
+    }
+
     // NPX
-    return `<p>Hello World!!!</p>`
+    return <input type="text" value={attributes.author} onChange={updateAuthor} />
   },
 
-  save() {
-    return `<p>Hello World!!!</p>`
+  save({ attributes }) {
+    return <p>Author name: {attributes.author}</p>
   }
 })
